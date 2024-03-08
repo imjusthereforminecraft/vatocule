@@ -1,4 +1,5 @@
 # Most important TODO: Organize this code!
+# More stuff todo: Draw electrons and make the nucleus look better
 
 # To learn how to use this goto https://www.pygame.org/docs/
 import pygame
