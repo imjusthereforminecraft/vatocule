@@ -129,13 +129,13 @@ class Atom:
         print(self.pointcols)
         random.shuffle(self.pointcols)
         print(self.pointcols)
-        #pregen points
+        # pregen points
         # Draw the nucleus
         self.points = []
         k = 0
         for j in range((self.protons+self.neutrons)//8+1):
             for i in range(8):
-                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, j)
+                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 100/(j+1))
                 if k == self.protons+self.neutrons:
                     break
                 k += 1
