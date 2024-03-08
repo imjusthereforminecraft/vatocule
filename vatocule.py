@@ -124,8 +124,10 @@ class Atom:
         
         for i in range(self.protons):
             self.pointcols.append((255,0,0))
+            
         for i in range(self.neutrons):
             self.pointcols.append((255,255,255))
+            
         print(self.pointcols)
         random.shuffle(self.pointcols)
         print(self.pointcols)
