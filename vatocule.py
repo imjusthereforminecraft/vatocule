@@ -120,6 +120,25 @@ class Atom:
         self.protons = int(self.elementdata["NumberofProtons"])
         self.neutrons = int(self.elementdata["NumberofNeutrons"])
         self.elecrtons = int(self.elementdata["NumberofElectrons"])
+        self.pointcols = []
+        
+        for i in range(self.protons):
+            self.pointcols.append((255,0,0))
+        for i in range(self.neutrons):
+            self.pointcols.append((255,255,255))
+        print(self.pointcols)
+        random.shuffle(self.pointcols)
+        print(self.pointcols)
+        #pregen points
+        # Draw the nucleus
+        self.points = []
+        k = 0
+        for j in range((self.protons+self.neutrons)//8+1):
+            for i in range(8):
+                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, j)
+                if k == self.protons+self.neutrons:
+                    break
+                k += 1
     def draw(self, jitter = 0):
         """
         Draw the atom on the screen.
@@ -128,29 +147,16 @@ class Atom:
         - y (float/int): The y-coordinate of the atom.
         - jitter (int, optional): The intensity of the jitter. Defaults to 0.
         """
-        if jitter != 0:
-            # Draw the nucleus
-            points = []
-            pointcols = []
-            for i in range(self.protons):
-                points = (self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 25))
-                points[i] = self.utils.return_jitter(points[i][0], points[i][1], 5)
-                pointcols.append((255,0,0))
-        else:
-            # Draw the nucleus
-            points = []
-            pointcols = []
-            for i in range(self.protons):
-                points = (self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 25))
-                pointcols.append((255,0,0))
-        
+            
         # Draw everything in points
-        for i in range(len(points)):
-            self.utils.draw_centered_circle(points[i][0], points[i][1], 10, pointcols[i])
+        self.newpoints = []
+        for i in range(len(self.points)):
+            self.newpoints.append(self.utils.return_jitter(self.points[i][0], self.points[i][1], jitter))
+            self.utils.draw_centered_circle(self.newpoints[i][0], self.newpoints[i][1], 10, self.pointcols[i])
 
 utils = Utils(screen)
 
-hydrogen = Atom("Hydrogen", screen, utils, 0, 0)
+hydrogen = Atom("Uranium", screen, utils, 0, 0)
 
 # Test this
 running = True
