@@ -1,8 +1,10 @@
 # vatocule
 View molecules and atoms, made with python.
 
-Programmers
+Programmers:
 
 Gabriel Couso
+
 Channing Hentges
+
 Naomi Wood
