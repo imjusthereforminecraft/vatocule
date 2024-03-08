@@ -1,3 +1,5 @@
+# Most important TODO: Organize this code!
+
 # To learn how to use this goto https://www.pygame.org/docs/
 import pygame
 import csv
