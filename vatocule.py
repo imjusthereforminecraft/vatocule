@@ -136,7 +136,7 @@ class Atom:
         for j in range((self.protons+self.neutrons)//8+1):
             print("ran" + str(j))
             for i in range(8+j):
-                self.points.append(self.utils.generate_points(8+j, self.x, self.y, ((self.protons+self.neutrons)//8-(j+1))*0.9)[i])
+                self.points.append(self.utils.generate_points(8+j, self.x, self.y, ((self.protons+self.neutrons)//8-(j**1.7+1))*0.9)[i])
                 if k == self.protons+self.neutrons:
                     break
                 k += 1
@@ -157,7 +157,7 @@ class Atom:
 
 utils = Utils(screen)
 
-hydrogen = Atom("Uranium", screen, utils, 0, 0)
+hydrogen = Atom("Hydrogen", screen, utils, 0, 0)
 
 # Test this
 running = True
