@@ -4,23 +4,6 @@ import csv
 import math
 import random
 
-def generate_points(n, cx, cy, r):
-    """
-    Generate equally spaced points around a central point.
-    
-    - n (int): The number of points to generate.
-    - cx (float/int): The x-coordinate of the central point.
-    - cy (float/int): The y-coordinate of the central point.
-    - r (float/int): The radius of the circle on which the points will be generated.
-    """
-    points = []
-    for i in range(n):
-        angle = math.pi * 2 * i / n
-        x = cx + r * math.cos(angle)
-        y = cy + r * math.sin(angle)
-        points.append((x, y))
-    return points
-
 # Load elements from csv table, return a dictionary (hopefully)
 
 def load_elements(filename):
@@ -97,9 +80,25 @@ class Utils():
         - intensity (int): The intensity of the jitter.
         """
         return (x+random.randrange(-intensity,intensity), y+random.randrange(-intensity,intensity))
+    def generate_points(self, n, cx, cy, r):
+        """
+        Generate equally spaced points around a central point.
+        
+        - n (int): The number of points to generate.
+        - cx (float/int): The x-coordinate of the central point.
+        - cy (float/int): The y-coordinate of the central point.
+        - r (float/int): The radius of the circle on which the points will be generated.
+        """
+        points = []
+        for i in range(n):
+            angle = math.pi * 2 * i / n
+            x = cx + r * math.cos(angle)
+            y = cy + r * math.sin(angle)
+            points.append((x, y))
+        return points
 
 class Atom:
-    def __init__(self, element, x, y, z):
+    def __init__(self, element, screen, utils, x, y, z = 0):
         """
         Create an Atom object.
         
@@ -109,10 +108,28 @@ class Atom:
         - y (float/int): The centered y-coordinate of the atom.
         - z (float/int): The centered z-coordinate of the atom.
         """
-        self.element = elements[element]
+        self.elementdata = elements[element]
+        self.screen = screen
+        self.utils = utils
         self.x = x
         self.y = y
         self.z = z
+        self.protons = int(self.elementdata["NumberofProtons"])
+        self.neutrons = int(self.elementdata["NumberofNeutrons"])
+        self.elecrtons = int(self.elementdata["NumberofElectrons"])
+    def draw(self, jitter = 0):
+        """
+        Draw the atom on the screen.
+        
+        - x (float/int): The x-coordinate of the atom.
+        - y (float/int): The y-coordinate of the atom.
+        - jitter (int, optional): The intensity of the jitter. Defaults to 0.
+        """
+        if jitter == 0:
+            # Draw the nucleus
+            self.utils.draw_centered_circle(self.x, self.y, 10)
+    
+        
         
 
 utils = Utils(screen)
@@ -130,7 +147,7 @@ while running:
         elif event.type == pygame.VIDEORESIZE:
             utils.refresh()
             print(str(utils.width)+" "+str(utils.height))
-    for point in generate_points(int(i), 0, 0, 25):
+    for point in utils.generate_points(int(i), 0, 0, 25):
             utils.draw_centered_circle(point[0],point[1],10)
     pygame.display.flip()
     if i >= 30:
