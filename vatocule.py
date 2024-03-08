@@ -2,6 +2,7 @@
 import pygame
 import csv
 import math
+import random
 
 def generate_points(n, cx, cy, r):
     """
@@ -86,9 +87,28 @@ class Utils():
         - color (tuple, optional): The color of the circle in RGB format. Defaults to white (255, 255, 255).
         """
         pygame.draw.circle(self.screen, color, (self.width//2+xoff, self.height//2+yoff), rad)
+    def return_jitter(self, x, y, intensity):
+        """
+        Returns a jittered coordinate.
+
+        Parameters:
+        - x (int): The x-coordinate of the point to jitter.
+        - y (int): The y-coordinate of the point to jitter.
+        - intensity (int): The intensity of the jitter.
+        """
+        return (x+random.randrange(-intensity,intensity), y+random.randrange(-intensity,intensity))
 
 class Atom:
     def __init__(self, element, x, y, z):
+        """
+        Create an Atom object.
+        
+        Parameters:
+        - element (str): The chemical symbol of the element.
+        - x (float/int): The centered x-coordinate of the atom.
+        - y (float/int): The centered y-coordinate of the atom.
+        - z (float/int): The centered z-coordinate of the atom.
+        """
         self.element = elements[element]
         self.x = x
         self.y = y
