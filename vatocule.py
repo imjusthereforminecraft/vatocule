@@ -134,9 +134,10 @@ class Atom:
         self.points = []
         k = 0
         for j in range((self.protons+self.neutrons)//8+1):
+            print("ran" + str(j))
             for i in range(8):
                 # TODO: fix point pregen as it generates in a fixed circle instead of variable radius
-                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 100/(j+1))
+                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, i*10)
                 if k == self.protons+self.neutrons:
                     break
                 k += 1
