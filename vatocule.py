@@ -87,6 +87,14 @@ class Utils():
         """
         pygame.draw.circle(self.screen, color, (self.width//2+xoff, self.height//2+yoff), rad)
 
+class Atom:
+    def __init__(self, element, x, y, z):
+        self.element = elements[element]
+        self.x = x
+        self.y = y
+        self.z = z
+        
+
 utils = Utils(screen)
 
 # Test this
