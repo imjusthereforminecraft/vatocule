@@ -137,6 +137,7 @@ class Atom:
                 points[i] = self.utils.return_jitter(points[i][0], points[i][1], 5)
                 pointcols.append((255,0,0))
         else:
+            # Draw the nucleus
             points = []
             pointcols = []
             for i in range(self.protons):
@@ -164,5 +165,6 @@ while running:
             utils.refresh()
             print(str(utils.width)+" "+str(utils.height))
     hydrogen.draw(1)
+    pygame.display.flip()
 
 pygame.quit()
