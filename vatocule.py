@@ -135,9 +135,8 @@ class Atom:
         k = 0
         for j in range((self.protons+self.neutrons)//8+1):
             print("ran" + str(j))
-            for i in range(8):
-                # TODO: fix point pregen as it generates in a fixed circle instead of variable radius
-                self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, i*10)
+            for i in range(8+j):
+                self.points.append(self.utils.generate_points(8+j, self.x, self.y, ((self.protons+self.neutrons)//8-(j+1))*0.9)[i])
                 if k == self.protons+self.neutrons:
                     break
                 k += 1
@@ -152,7 +151,7 @@ class Atom:
             
         # Draw everything in points
         self.newpoints = []
-        for i in range(len(self.points)):
+        for i in range(len(self.pointcols)):
             self.newpoints.append(self.utils.return_jitter(self.points[i][0], self.points[i][1], jitter))
             self.utils.draw_centered_circle(self.newpoints[i][0], self.newpoints[i][1], 10, self.pointcols[i])
 
