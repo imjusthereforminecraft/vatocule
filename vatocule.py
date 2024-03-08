@@ -43,7 +43,7 @@ def load_elements(filename):
         tempdict[row[1]] = tempdict2
     return tempdict
             
-elements = load_elements('Downloads\pte.csv')
+elements = load_elements('pte.csv')
 
 # Default config variables
 SCREEN_WIDTH = 800
@@ -91,15 +91,21 @@ utils = Utils(screen)
 
 # Test this
 running = True
+i = 0
 while running:
+    i += 0.01
+    # fill screen
+    screen.fill((0,0,0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.VIDEORESIZE:
             utils.refresh()
             print(str(utils.width)+" "+str(utils.height))
-    for point in generate_points(10, 0, 0, 25):
+    for point in generate_points(int(i), 0, 0, 25):
             utils.draw_centered_circle(point[0],point[1],10)
     pygame.display.flip()
+    if i >= 30:
+        i = 0
 
 pygame.quit()
