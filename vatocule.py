@@ -90,11 +90,14 @@ class Utils():
         - r (float/int): The radius of the circle on which the points will be generated.
         """
         points = []
-        for i in range(n):
-            angle = math.pi * 2 * i / n
-            x = cx + r * math.cos(angle)
-            y = cy + r * math.sin(angle)
-            points.append((x, y))
+        if n == 1:
+            points.append((cx, cy))
+        else:
+            for i in range(n):
+                angle = math.pi * 2 * i / n
+                x = cx + r * math.cos(angle)
+                y = cy + r * math.sin(angle)
+                points.append((x, y))
         return points
 
 class Atom:
@@ -125,20 +128,33 @@ class Atom:
         - y (float/int): The y-coordinate of the atom.
         - jitter (int, optional): The intensity of the jitter. Defaults to 0.
         """
-        if jitter == 0:
+        if jitter != 0:
             # Draw the nucleus
-            self.utils.draw_centered_circle(self.x, self.y, 10)
-    
+            points = []
+            pointcols = []
+            for i in range(self.protons):
+                points = (self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 25))
+                points[i] = self.utils.return_jitter(points[i][0], points[i][1], 5)
+                pointcols.append((255,0,0))
+        else:
+            points = []
+            pointcols = []
+            for i in range(self.protons):
+                points = (self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 25))
+                pointcols.append((255,0,0))
         
-        
+        # Draw everything in points
+        for i in range(len(points)):
+            self.utils.draw_centered_circle(points[i][0], points[i][1], 10, pointcols[i])
 
 utils = Utils(screen)
+
+hydrogen = Atom("Hydrogen", screen, utils, 0, 0)
 
 # Test this
 running = True
 i = 0
 while running:
-    i += 0.01
     # fill screen
     screen.fill((0,0,0))
     for event in pygame.event.get():
@@ -147,10 +163,6 @@ while running:
         elif event.type == pygame.VIDEORESIZE:
             utils.refresh()
             print(str(utils.width)+" "+str(utils.height))
-    for point in utils.generate_points(int(i), 0, 0, 25):
-            utils.draw_centered_circle(point[0],point[1],10)
-    pygame.display.flip()
-    if i >= 30:
-        i = 0
+    hydrogen.draw(1)
 
 pygame.quit()
