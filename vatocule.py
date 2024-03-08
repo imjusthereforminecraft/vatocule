@@ -135,6 +135,7 @@ class Atom:
         k = 0
         for j in range((self.protons+self.neutrons)//8+1):
             for i in range(8):
+                # TODO: fix point pregen as it generates in a fixed circle instead of variable radius
                 self.points = self.utils.generate_points(self.protons + self.neutrons, self.x, self.y, 100/(j+1))
                 if k == self.protons+self.neutrons:
                     break
