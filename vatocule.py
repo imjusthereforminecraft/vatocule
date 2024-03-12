@@ -1,5 +1,6 @@
 # Most important TODO: Organize this code!
 # More stuff todo: Draw electrons and make the nucleus look better
+# Leave your name, date, and what you changed under this comment when you edit this file
 
 # To learn how to use this goto https://www.pygame.org/docs/
 import pygame
@@ -179,5 +180,4 @@ while running:
             print(str(utils.width)+" "+str(utils.height))
     hydrogen.draw(1)
     pygame.display.flip()
-# comment
 pygame.quit()
