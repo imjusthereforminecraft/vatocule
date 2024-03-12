@@ -221,6 +221,8 @@ class Menu_Utils:
     def wait_until_not_clicked(self, rect):
         while self.check_if_area_clicked(rect):
             pass
+    def return_pos32(self, x, y):
+        return (x*32, y*32)
 
 menu_utils = Menu_Utils(screen, utils)
 
@@ -236,5 +238,8 @@ while running:
             utils.refresh()
             print(str(utils.width)+" "+str(utils.height))
     hydrogen.draw(1)
+    button = menu_utils.draw_image_button(0, 0, 32, 32, "pixilart-drawing.png")
+    if menu_utils.check_if_area_clicked(button):
+        print("hydrogen clicked")
     pygame.display.flip()
 pygame.quit()
