@@ -166,7 +166,64 @@ utils = Utils(screen)
 
 hydrogen = Atom("Lead", screen, utils, 0, 0)
 
-# Test this
+# Code to draw the menu along with utils
+
+class Menu_Utils:
+    def __init__(self, screen, utils):
+        self.screen = screen
+        self.utils = utils
+    def draw_button(self, x, y, width, height, text, color=(255,255,255), textcolor=(0,0,0)):
+        """
+        Draw a button on the screen.
+        
+        - x (int): The x-coordinate of the top-left corner of the button.
+        - y (int): The y-coordinate of the top-left corner of the button.
+        - width (int): The width of the button.
+        - height (int): The height of the button.
+        - text (str): The text to display on the button.
+        - color (tuple, optional): The color of the button in RGB format. Defaults to white (255, 255, 255).
+        - textcolor (tuple, optional): The color of the text in RGB format. Defaults to black (0, 0, 0).
+        """
+        button = pygame.draw.rect(self.screen, color, (x, y, width, height))
+        pygame.font.init()
+        font = pygame.font.Font(None, 36)
+        text = font.render(text, 1, textcolor)
+        self.screen.blit(text, (x+10, y+10))
+        return button
+    def draw_image_button(self, x, y, width, height, image, color=(255,255,255)):
+        """
+        Draw a button with an image on the screen.
+        
+        - x (int): The x-coordinate of the top-left corner of the button.
+        - y (int): The y-coordinate of the top-left corner of the button.
+        - width (int): The width of the button.
+        - height (int): The height of the button.
+        - image (str): The path to the image to display on the button.
+        - color (tuple, optional): The color of the button in RGB format. Defaults to white (255, 255, 255).
+        """
+        button = pygame.draw.rect(self.screen, color, (x, y, width, height))
+        img = pygame.image.load(image)
+        img = pygame.transform.scale(img, (width, height))
+        self.screen.blit(img, (x, y))
+        return button
+    def check_if_area_clicked(self, rect):
+        """
+        Check if an area on the screen was clicked.
+        
+        - rect (pygame.Rect): The rectangle representing the area to check.
+        """
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if rect.x+rect.width > mouse[0] > rect.x and rect.y+rect.height > mouse[1] > rect.y:
+            if click[0] == 1:
+                return True
+        return False
+    def wait_until_not_clicked(self, rect):
+        while self.check_if_area_clicked(rect):
+            pass
+
+menu_utils = Menu_Utils(screen, utils)
+
 running = True
 i = 0
 while running:
