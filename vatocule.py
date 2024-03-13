@@ -165,7 +165,7 @@ class Atom:
 
 utils = Utils(screen)
 
-hydrogen = Atom("Lead", screen, utils, 0, 0)
+hydrogen = Atom("Hydrogen", screen, utils, 0, 0)
 
 # Code to draw the menu along with utils
 
@@ -207,6 +207,17 @@ class Menu_Utils:
         img = pygame.transform.scale(img, (width, height))
         self.screen.blit(img, (x, y))
         return button
+    
+    # The circle on which the electrons will show up(in progress)
+    def draw_button_circumference(self, x, y, width, height, image, color=(255, 255, 255)):
+        button = pygame.draw.circle(self.screen, color, (x, y, width * 2, height * 2))
+        radius = height
+        circum = 2 * math.pi * radius
+        img = pygame.image.load(image)
+        img = pygame.transform.scale(img, (width, height))
+        self.screen.blit(img, (x, y))
+        return button
+    
     def check_if_area_clicked(self, rect):
         """
         Check if an area on the screen was clicked.
